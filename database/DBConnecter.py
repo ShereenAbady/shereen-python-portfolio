@@ -36,7 +36,6 @@ class DBConnector:
     def db_query(self,query="", query_type="read", fetch="one"):
         """
         Execute SQL queries and return the results.
-        
         :param query: SQL query string.
         :param query_type: "read" for SELECT, "write" for INSERT/UPDATE/DELETE.
         :param fetch: "one" to fetch one row or "all" to fetch all rows (for read queries).
@@ -48,9 +47,7 @@ class DBConnector:
             connection, cursor = db_connector.get_connection()
             if not connection or not cursor:
                 raise Exception("Failed to establish a database connection.")
-            
-            print('ok1')
-            
+        
             cursor.execute(query)
             result = None
             if query_type == "read":
@@ -59,17 +56,13 @@ class DBConnector:
                 elif fetch == "all":
                     result = cursor.fetchall()
             elif query_type == "write":
-                print('here2')
                 connection.commit()
                 result = cursor.rowcount
             
             return result
             
         except Exception as e:
-            # You might want to log the error here or raise it
             raise Exception(f"Query error: {e}")
         finally:
-            if cursor:
                 cursor.close()
-            if connection:
                 connection.close()

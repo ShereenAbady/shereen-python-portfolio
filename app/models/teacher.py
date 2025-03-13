@@ -64,10 +64,12 @@ class Teacher:
             if not teacher_id:
                 raise Exception("Error: Teacher ID is required")
 
-            update_query = """
+            update_query = f"""
                 UPDATE teachers 
-                SET name=%s, email=%s, phone=%s, age=%s, experience=%s, specialization=%s
-                WHERE id=%s
+                SET name='{name}', email='{email}',
+                phone={phone}, age={age}, experience={experience},
+                specialization='{specialization}'
+                WHERE id={teacher_id}
             """
             db_model = DBConnector()
             rows_updated = db_model.db_query(update_query, "write")
@@ -88,7 +90,7 @@ class Teacher:
                 raise Exception("Error: Teacher ID is required")
 
             db_model = DBConnector()
-            delete_query = "DELETE FROM teachers WHERE id = %s"
+            delete_query = f"DELETE FROM teachers WHERE id = {teacher_id}"
             rows_deleted = db_model.db_query(delete_query, "write")
 
             return {"success": True, "message": f"{rows_deleted} teacher(s) deleted"}
