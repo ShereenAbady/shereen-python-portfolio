@@ -31,6 +31,7 @@ class App(Resource):
 
     def post(self):
         route = request.url_rule.rule
+        request_data = request.get_json()  # Extract JSON data from request
         
         class_details_controller = ClassController()
         teachers_controller = TeachersController()
@@ -38,14 +39,14 @@ class App(Resource):
         
         # Handle routes 
         if route == "/classes/requestClass":
-            return class_details_controller.join_class()
+            return class_details_controller.join_class_controller(request_data)
         if route == "/teachers/add":
-            return teachers_controller.add_teacher()
+            return teachers_controller.add_teacher_controller(request_data)
         if route == "/teachers/edit":
-            return teachers_controller.edit_teacher()
+            return teachers_controller.edit_teacher_controller(request_data)
         if route == "/teachers/delete":
-            return teachers_controller.delete_teacher()
+            return teachers_controller.delete_teacher_controller(request_data)
         if route == "/clients/withdraw":
-            return client_actions_controller.withdraw_client()
+            return client_actions_controller.withdraw_client_controller(request_data)
         
         return {"error": "Invalid route"}, 404  # Default response for unknown routes
