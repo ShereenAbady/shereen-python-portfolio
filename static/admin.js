@@ -48,7 +48,7 @@ async function loadTeachers() {
                 <td>${teacher.age}</td>
                 <td>${teacher.experience}</td>
                 <td>${teacher.specialization}</td>
-                <td><button onclick="deleteTeacher(${teacher.id})">حذف</button></td>
+                <td><button onclick="deleteTeacher(${teacher.id})">تعديل/حذف</button></td>
             `;
             teachersList.appendChild(row);
         });

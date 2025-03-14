@@ -35,7 +35,6 @@ class App(Resource):
         teachers_controller = TeachersController()
 
         if route == "/get/teachers":
-            print('her55')
             return teachers_controller.get_teachers()
 
         return {"error": "Invalid route"}, 404
