@@ -55,5 +55,17 @@ Import the API endpoints into Postman.
 Use GET for retrieving teachers and POST for adding new ones.
 
 - Frontend Integration:
-The API can be accessed via a simple HTML form using JavaScript 
-for sending requests and get teachers or adding a teacher.
+Frontend Integration:
+The API can be accessed via a simple HTML form using JavaScript for sending requests to 
+get teachers or add a teacher. (in Arabic form)
+
+A React.js frontend can also be used for better user experience and data handling. (in English form)
+
+React uses Axios to fetch data from the Flask API and display the list of teachers .
+
+Ensure Node.js is installed, then install dependencies using:
+
+
+npm install
+Run the React app using:
+npm start
