@@ -1,6 +1,32 @@
 document.addEventListener("DOMContentLoaded", function () {
     loadTeachers();
 });
+async function loadTeachers() {
+    try {
+        const response = await fetch('/get/teachers');
+        const data = await response.json();
+
+        const teachersList = document.getElementById("teachersList");
+        teachersList.innerHTML = "";
+
+        data.teachers.forEach(teacher => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${teacher.name}</td>
+                <td>${teacher.email}</td>
+                <td>${teacher.phone}</td>
+                <td>${teacher.age}</td>
+                <td>${teacher.experience}</td>
+                <td>${teacher.specialization}</td>
+                <td><button onclick="deleteTeacher(${teacher.id})">حذف</button></td>
+            `;
+            teachersList.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error("خطأ في تحميل قائمة المدرسين:", error);
+    }
+}
 
 async function addTeacher() {
     const name = document.getElementById("teacherName").value.trim();
@@ -31,38 +57,16 @@ async function addTeacher() {
     }
 }
 
-async function loadTeachers() {
-    try {
-        const response = await fetch('/get/teachers');
-        const data = await response.json();
-
-        const teachersList = document.getElementById("teachersList");
-        teachersList.innerHTML = "";
-
-        data.teachers.forEach(teacher => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${teacher.name}</td>
-                <td>${teacher.email}</td>
-                <td>${teacher.phone}</td>
-                <td>${teacher.age}</td>
-                <td>${teacher.experience}</td>
-                <td>${teacher.specialization}</td>
-                <td><button onclick="deleteTeacher(${teacher.id})">تعديل/حذف</button></td>
-            `;
-            teachersList.appendChild(row);
-        });
-
-    } catch (error) {
-        console.error("خطأ في تحميل قائمة المدرسين:", error);
-    }
-}
 
 async function deleteTeacher(id) {
     if (!confirm("هل أنت متأكد من حذف هذا المدرس؟")) return;
 
     try {
-        const response = await fetch(`/teachers/delete/${id}`, { method: 'DELETE' });
+        const response = await fetch(`/teachers/delete`,
+             { method: 'POST' ,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id})
+            });
         const data = await response.json();
         alert(data.message);
         loadTeachers(); // update list after delete
